@@ -97,3 +97,4 @@ c:\QAFrameWork\obj\Debug\net5.0\QAFrameWork.dll
 c:\QAFrameWork\obj\Debug\net5.0\ref\QAFrameWork.dll
 c:\QAFrameWork\obj\Debug\net5.0\QAFrameWork.pdb
 c:\QAFrameWork\obj\Debug\net5.0\QAFrameWork.genruntimeconfig.cache
+c:\QAFrameWork\bin\Debug\net5.0\WebDriver.dll
