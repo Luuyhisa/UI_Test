@@ -1,22 +1,41 @@
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using AventStack.ExtentReports;
+using AventStack.ExtentReports.Reporter;
+
 
 namespace QAFrameWork
 {
     public class Tests
     {
         IWebDriver driver;
+        ExtentTest test = null;
 
-
-
+        ExtentReports extent = null;
 
         [OneTimeSetUp]
         public void Setup()
         {
+
+
+
+
+            extent = new ExtentReports();
+
+            string startupPath = System.IO.Directory.GetDirectoryRoot("Report");
+            var htmlReporter = new ExtentHtmlReporter(@"C:\\QAFrameWork\Report\QAReport.html");
+            // var htmlReporter = new ExtentHtmlReporter("C:\\QAFrameWork\\Report\\QAReport.html");
+            extent.AttachReporter(htmlReporter);
+
+
+
             driver = new ChromeDriver();
             driver.Url = "https://www.google.com/";
             driver.Manage().Window.Maximize();
+            
+
+        
         }
 
         [Test]
@@ -27,6 +46,9 @@ namespace QAFrameWork
         [Test]
         public void GoogleTest()
         {
+            ExtentTest test = null;
+            test = extent.CreateTest("GoogleTest").Info("Test Started");
+            test.Log(Status.Info, "Browser launched... ");
             //driver.Url = "https://www.google.com/";
             ////input[@class='gLFyf gsfi']
             IWebElement inText = driver.FindElement(By.XPath("//input[@class='gLFyf gsfi']"));
@@ -42,7 +64,8 @@ namespace QAFrameWork
         [OneTimeTearDown]
         public void Close()
         {
-           // driver.Close();
+            // driver.Close();
+            extent.Flush();
         }
     }
 }
