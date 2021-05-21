@@ -4,10 +4,12 @@ using OpenQA.Selenium.Chrome;
 using AventStack.ExtentReports;
 using AventStack.ExtentReports.Reporter;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
-namespace QAFrameWork
+namespace QAFrameWork.TestPack
 {
-    public class Tests
+    public class Scenario
     {
         IWebDriver driver;
         ExtentTest test = null;
@@ -24,7 +26,7 @@ namespace QAFrameWork
         public void BrowserSetUp()
         {
             driver = new ChromeDriver();
-            driver.Url = "https://www.google.com/";
+            driver.Url = "https://www.bbc.co.uk/sport/football/scores-fixtures";
             driver.Manage().Window.Maximize();
         }
         [Test]
@@ -34,6 +36,8 @@ namespace QAFrameWork
             extent.AddSystemInfo("Host Name", "Computer Name");
             extent.AddSystemInfo("Browser", "Google Chrome");
         }
+
+
         public static string ScreenGrab(IWebDriver driver, string ScreenShotName)
         {
             ITakesScreenshot ts = (ITakesScreenshot)driver;
@@ -45,21 +49,52 @@ namespace QAFrameWork
             return localPath;
         }
         [Test]
-        public void GoogleTestaa()
+        public void Scenario1()
         {
+
+            /*
+            Feature: As a business user, I would like to make a record of all teams which are playing today
+            Scenario: Output all team names with a match today. If there are no matches today, output a message to convey this.
+            */
             string passFail;
             ExtentTest test = null;
             try
             {
-                test = extent.CreateTest("GoogleTest").Info("Test Started");
+                test = extent.CreateTest("Scenario 1").Info("Test Started");
                 test.Log(Status.Info, "Browser launched... ");
-                //driver.Url = "https://www.google.com/";
                 ////input[@class='gLFyf gsfi']
-                IWebElement inText = driver.FindElement(By.XPath("//input[@class='gLFyf gsfi']"));
-                IWebElement btnEnter = driver.FindElement(By.XPath("//div[@class='FPdoLc lJ9FBc']//input[@class='gNO89b']"));
-                inText.SendKeys("L");
-                inText.SendKeys("\t");
-                btnEnter.Click();
+
+
+
+
+                IWebElement todayTab = driver.FindElement(By.XPath("//*[@id='sp-timeline-current-dates']/li/a/span[1]"));
+                System.Threading.Thread.Sleep(4000);
+                todayTab.Click();
+                System.Threading.Thread.Sleep(6000);
+
+                IList<IWebElement> MatchList = driver.FindElements(By.XPath("//div[@class= 'qa-match-block']//span[@class='sp-c-fixture__team-name-wrap']"));
+                List<String> values = new List<string>();
+                values = MatchList.Select(x => x.Text).ToList<string>();
+                string x = values[1];
+
+                int GameNo = MatchList.Count / 2;
+
+                int[] GameNos = new int[GameNo];
+                String NumberOfGames = GameNo.ToString();
+
+                for (int i = 0; i < GameNos.Length; i=i+2)
+                {
+                
+                    String Home = values[i];
+                    String Away= values[i+1];
+                    test.Log(Status.Skip, Home.ToString() +" VS " + Away.ToString());
+               
+                }
+
+
+                // inText.SendKeys("L");
+                // inText.SendKeys("\t");
+                // btnEnter.Click();
                 //div[@class='lJ9FBc']//input[@class='gNO89b']
                 test.Log(Status.Pass, "Navigated to the next Page...");
                 //screeenshot
@@ -115,5 +150,9 @@ namespace QAFrameWork
 
             extent.Flush();
         }
+
+
+
+
     }
 }
