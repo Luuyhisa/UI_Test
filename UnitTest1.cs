@@ -47,11 +47,6 @@ namespace QAFrameWork
             return localPath;
         }
 
-
-
-
-
-
         [Test]
         public void GoogleTest()
         {

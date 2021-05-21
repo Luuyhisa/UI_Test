@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\QAFrameWork\\QAFrameWork.csproj": {}
+    "c:\\QAFrameWork\\QAFrameWork.csproj": {}
   },
   "projects": {
-    "C:\\QAFrameWork\\QAFrameWork.csproj": {
+    "c:\\QAFrameWork\\QAFrameWork.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\QAFrameWork\\QAFrameWork.csproj",
+        "projectUniqueName": "c:\\QAFrameWork\\QAFrameWork.csproj",
         "projectName": "QAFrameWork",
-        "projectPath": "C:\\QAFrameWork\\QAFrameWork.csproj",
+        "projectPath": "c:\\QAFrameWork\\QAFrameWork.csproj",
         "packagesPath": "C:\\Users\\Langa\\.nuget\\packages\\",
-        "outputPath": "C:\\QAFrameWork\\obj\\",
+        "outputPath": "c:\\QAFrameWork\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Langa\\AppData\\Roaming\\NuGet\\NuGet.Config",
