@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "1tTorREInTOe8k1hq6fc0UJEHYX36WGuX4LCw7gjkeamyUuySzu/cqylKu5AOm+EUxPtnSAnnAtMAtmpG+m4tw==",
+  "dgSpecHash": "sgFwe4cVb+410gfKsX/2GEJku/J0ZNqQfxy0oG92CU2M5MNIksLZO3ba3REsWUeyxz6XVs8O/hkdibqhgZC8Lw==",
   "success": true,
-  "projectFilePath": "c:\\QAFrameWork\\QAFrameWork.csproj",
+  "projectFilePath": "C:\\QAFrameWork\\QAFrameWork.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Langa\\.nuget\\packages\\dnsclient\\1.2.0\\dnsclient.1.2.0.nupkg.sha512",
     "C:\\Users\\Langa\\.nuget\\packages\\extentreports\\4.1.0\\extentreports.4.1.0.nupkg.sha512",
