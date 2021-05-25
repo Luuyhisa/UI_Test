@@ -6,7 +6,6 @@ using AventStack.ExtentReports.Reporter;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-
 namespace QAFrameWork.TestPack
 {
     public class Scenario
@@ -47,7 +46,6 @@ namespace QAFrameWork.TestPack
             screenshot.SaveAsFile(localPath, ScreenshotImageFormat.Png);
             return localPath;
         }
-
         [Test]
         public void Scenario1()
         {
@@ -88,20 +86,17 @@ namespace QAFrameWork.TestPack
                 test.AddScreenCaptureFromPath(screenshot);
                 passFail = null;
                 test.Log(Status.Pass, "Task Completed... ");
-
             }
             catch (Exception e)
             {
                 passFail = e.ToString();
                 test.Log(Status.Fail, "Task Failed... ");
-
                 throw;
             }
             finally
             {
                 if (driver != null) { driver.Quit(); }
                 test.Log(Status.Pass, "Driver closed... ");
-
             }
             Assert.IsNull(passFail, "Failed to complete the Test");
         }
@@ -122,7 +117,6 @@ namespace QAFrameWork.TestPack
                 inputSearch.SendKeys("sports");
                 System.Threading.Thread.Sleep(2000);
                 test.Log(Status.Pass, "Text Entered... ");
-
                 btnSearch.Click();
                 System.Threading.Thread.Sleep(6000);
                 test.Log(Status.Pass, "Search complete... ");
@@ -135,7 +129,6 @@ namespace QAFrameWork.TestPack
                 values = listOfArticle.Select(x => x.Text).ToList<string>();
                 int ArticleNo = listOfArticle.Count;
                 int[] ArticleList = new int[ArticleNo];
-
                 if (ArticleList.Length > 0)
                 {
                     for (int intCounter = 0; intCounter <= ArticleList.Length; intCounter = intCounter + ArticleList.Length)
@@ -157,16 +150,13 @@ namespace QAFrameWork.TestPack
                 {
                     test.Log(Status.Warning, " No Articles under 'Sports'...  ");
                 }
-
                 test.Log(Status.Pass, "Task Completed... ");
-
                 passFail = null;
             }
             catch (Exception e)
             {
                 passFail = e.ToString();
                 test.Log(Status.Fail, "Task Failed... ");
-
                 throw;
             }
             finally
@@ -176,111 +166,142 @@ namespace QAFrameWork.TestPack
             }
             Assert.IsNull(passFail, "Failed to complete the Test");
         }
-
         [Test]
         public void Scenario3()
         {
             // Feature: As a QA, I would like to verify all negative scenarios for login
             //Scenario: Select ‘Sign in’, and enter as many negative scenarios as possible.Verify that a error message is displayed and the text that it contains is as expected
-
             string passFail;
             ExtentTest test = null;
             try
             {
                 test = extent.CreateTest("Scenario 3").Info("Test Started");
                 test.Log(Status.Info, "Browser launched... ");
-                //click SignIn
                 IWebElement btnSignIn = driver.FindElement(By.XPath("//span[@id='idcta-username']"));
                 btnSignIn.Click();
-
-
-
-
                 int negativeScenarios;
-
-                for (int i = 0; i < 3; i++)
+                for (int i = 0; i < 4; i++)
                 {
                     negativeScenarios = +i;
-
-
                     switch (negativeScenarios)
                     {
-                        case 1:
+                        case 0:
                             System.Threading.Thread.Sleep(6000);
-                            ///-----------------------------------------------------------------------------------------------------------------------------
                             IWebElement inputUser = driver.FindElement(By.XPath("//input[@id='user-identifier-input']"));
                             inputUser.Clear();
                             inputUser.SendKeys("");
                             System.Threading.Thread.Sleep(2000);
-
                             IWebElement inputPassword = driver.FindElement(By.XPath("//input[@id='password-input']"));
                             inputPassword.Clear();
                             inputPassword.SendKeys("");
                             System.Threading.Thread.Sleep(2000);
-
                             IWebElement btnLogIn = driver.FindElement(By.XPath("//button[@id='submit-button']"));
                             btnLogIn.Click();
                             System.Threading.Thread.Sleep(6000);
                             IWebElement errorUsername = driver.FindElement(By.XPath(" (//p[@class='form-message__text'])[1]"));
                             IWebElement errorPassword = driver.FindElement(By.XPath(" (//p[@class='form-message__text'])[2]"));
-
                             if ((errorUsername.Text == "Something's missing. Please check and try again.") && (errorPassword.Text == "Something's missing. Please check and try again."))
                             {
-                                test.Log(Status.Pass, "Error : " + errorUsername.Text);
-                                test.Log(Status.Pass, "Error : " + errorPassword.Text);
-
+                                test.Log(Status.Pass, "Correct Error : " + errorUsername.Text);
+                                test.Log(Status.Pass, "Correct Error : " + errorPassword.Text);
+                                test.Log(Status.Info, "............................................................................");
                             }
                             else
                             {
                                 test.Log(Status.Fail, "Incorrect Error : " + errorUsername.Text);
                                 test.Log(Status.Fail, "Incorect Error : " + errorPassword.Text);
+                                test.Log(Status.Info, "............................................................................");
                             }
-
                             break;
-                        case 2:
+                        case 1:
                             System.Threading.Thread.Sleep(6000);
-                            ///-----------------------------------------------------------------------------------------------------------------------------
                             inputUser = driver.FindElement(By.XPath("//input[@id='user-identifier-input']"));
                             inputUser.Clear();
                             inputUser.SendKeys("212@1");
                             System.Threading.Thread.Sleep(2000);
-
                             inputPassword = driver.FindElement(By.XPath("//input[@id='password-input']"));
                             inputPassword.Clear();
                             inputPassword.SendKeys("@@");
                             System.Threading.Thread.Sleep(2000);
-
                             btnLogIn = driver.FindElement(By.XPath("//button[@id='submit-button']"));
                             btnLogIn.Click();
                             System.Threading.Thread.Sleep(6000);
                             errorUsername = driver.FindElement(By.XPath(" (//p[@class='form-message__text'])[1]"));
                             errorPassword = driver.FindElement(By.XPath(" (//p[@class='form-message__text'])[2]"));
-                            string expectedError = "Something's missing. Please check and try again.";
-                            if ((errorUsername.Text == expectedError) && (errorPassword.Text == expectedError))
+                            string expectedErrorEmail = "Sorry, that email doesn’t look right. Please check it's a proper email.";
+                            string expectedErrorPass = "Sorry, that password is too short. It needs to be eight characters or more.";
+                            if ((errorUsername.Text == expectedErrorEmail) && (errorPassword.Text == expectedErrorPass))
                             {
-                                test.Log(Status.Pass, "Error : " + errorUsername.Text);
-                                test.Log(Status.Pass, "Error : " + errorPassword.Text);
-
+                                test.Log(Status.Pass, "Correct Error : " + errorUsername.Text);
+                                test.Log(Status.Pass, "Correct Error : " + errorPassword.Text);
+                                test.Log(Status.Info, "............................................................................");
                             }
                             else
                             {
                                 test.Log(Status.Fail, "Incorrect Error : " + errorUsername.Text);
                                 test.Log(Status.Fail, "Incorect Error : " + errorPassword.Text);
+                                test.Log(Status.Info, "............................................................................");
                             }
-
+                            break;
+                        case 2:
+                            System.Threading.Thread.Sleep(6000);
+                            inputUser = driver.FindElement(By.XPath("//input[@id='user-identifier-input']"));
+                            inputUser.Clear();
+                            inputUser.SendKeys("LuckyLungisa@gmail.com");
+                            System.Threading.Thread.Sleep(2000);
+                            inputPassword = driver.FindElement(By.XPath("//input[@id='password-input']"));
+                            inputPassword.Clear();
+                            inputPassword.SendKeys("123456789123456789");
+                            System.Threading.Thread.Sleep(2000);
+                            btnLogIn = driver.FindElement(By.XPath("//button[@id='submit-button']"));
+                            btnLogIn.Click();
+                            System.Threading.Thread.Sleep(6000);
+                            errorPassword = driver.FindElement(By.XPath("//p[@class='form-message__text']"));
+                            string xpectedErrorPass = "Sorry, that password isn't valid. Please include a letter.";
+                            if (errorPassword.Text == xpectedErrorPass)
+                            {
+                                test.Log(Status.Pass, "Correct Error : " + errorPassword.Text);
+                                test.Log(Status.Info, "............................................................................");
+                            }
+                            else
+                            {
+                                test.Log(Status.Fail, "Incorect Error : " + errorPassword.Text);
+                                test.Log(Status.Info, "............................................................................");
+                            }
                             break;
 
+                        case 3:
 
-
+                            System.Threading.Thread.Sleep(6000);
+                            inputUser = driver.FindElement(By.XPath("//input[@id='user-identifier-input']"));
+                            inputUser.Clear();
+                            inputUser.SendKeys("LuckyLungisa@gmail.com");
+                            System.Threading.Thread.Sleep(2000);
+                            inputPassword = driver.FindElement(By.XPath("//input[@id='password-input']"));
+                            inputPassword.Clear();
+                            inputPassword.SendKeys("ZXCVqwert123@7784");
+                            System.Threading.Thread.Sleep(2000);
+                            btnLogIn = driver.FindElement(By.XPath("//button[@id='submit-button']"));
+                            btnLogIn.Click();
+                            System.Threading.Thread.Sleep(6000);
+                            errorPassword = driver.FindElement(By.XPath("//p[@class='form-message__text']"));
+                            string xpectedError = "Sorry, we can’t find an account with that email. You can ";
+                            if (errorPassword.Text.Contains(xpectedError.ToString()))
+                            {
+                                test.Log(Status.Pass, "Correct Error : " + errorPassword.Text);
+                                test.Log(Status.Info, "............................................................................");
+                            }
+                            else
+                            {
+                                test.Log(Status.Fail, "Incorect Error : " + errorPassword.Text);
+                                test.Log(Status.Info, "............................................................................");
+                            }
+                            break;
                     }
                 }
-
-
-
-
-
-
-
+                string screenshot = ScreenGrab(driver, "Screenshot");
+                test.AddScreenCaptureFromPath(screenshot);
+                test.Log(Status.Pass, "Screen captured successful... ");
                 test.Log(Status.Pass, "Task Completed... ");
 
                 passFail = null;
@@ -302,8 +323,6 @@ namespace QAFrameWork.TestPack
 
 
         }
-
-
         [TearDown]
         public void BrowserTearDown()
         {
@@ -315,9 +334,5 @@ namespace QAFrameWork.TestPack
 
             extent.Flush();
         }
-
-
-
-
     }
 }
